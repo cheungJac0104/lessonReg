@@ -59,28 +59,24 @@ class _MyBooksPageState extends State<HomePage> {
                 itemBuilder: (context, index) {
                   final bookData = [
                     {
-                      'imageAsset': '',
+                      'imageAsset': 'assets/images/mon.png',
                       'title': 'Copper Canyon',
-                      'author':
-                          'Last the Road is the debut and only novela signed by British singer Dua Lipa',
+                      'author': '',
                     },
                     {
-                      'imageAsset': '',
+                      'imageAsset': 'assets/images/mon.png',
                       'title': 'Discover Your Path To Success',
-                      'author':
-                          'An unique is one of the biggest superstars to have emerged from the',
+                      'author': '',
                     },
                     {
-                      'imageAsset': '',
+                      'imageAsset': 'assets/images/mon.png',
                       'title': 'South Matteburgh',
-                      'author':
-                          'Sierra Techumara, popularly known as Copper Canyon, is situated in Mexico.',
+                      'author': '',
                     },
                     {
-                      'imageAsset': '',
+                      'imageAsset': 'assets/images/mon.png',
                       'title': 'Priceview',
-                      'author':
-                          'Last the Road is the debut and only novela signed by British singer Dua Lipa',
+                      'author': '',
                     },
                   ][index];
 
