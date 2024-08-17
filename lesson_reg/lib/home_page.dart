@@ -6,7 +6,7 @@ class HomePage extends StatefulWidget {
   _MyBooksPageState createState() => _MyBooksPageState();
 }
 
-class _MyBooksPageState extends State<MyBooksPage> {
+class _MyBooksPageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,19 +31,22 @@ class _MyBooksPageState extends State<MyBooksPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 16.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _CategoryButton(label: 'POPULAR', isActive: true),
-                _CategoryButton(label: 'ROMANTIC'),
-                _CategoryButton(label: 'SCIENCE'),
-                _CategoryButton(label: 'STORY'),
-                _CategoryButton(label: 'MORE'),
-              ],
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _CategoryButton(label: 'POPULAR', isActive: true),
+                  _CategoryButton(label: 'ROMANTIC'),
+                  _CategoryButton(label: 'SCIENCE'),
+                  _CategoryButton(label: 'STORY'),
+                  _CategoryButton(label: 'MORE'),
+                ],
+              ),
             ),
             SizedBox(height: 24.0),
             Text(
-              'Top readings',
+              'Reservation Information',
               style: TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
@@ -51,32 +54,47 @@ class _MyBooksPageState extends State<MyBooksPage> {
             ),
             SizedBox(height: 16.0),
             Expanded(
-              child: ListView(
-                children: [
-                  _BookCard(
-                    imageAsset: 'assets/copper_canyon.png',
-                    title: 'Copper Canyon',
-                    author: 'Last the Road is the debut and only novela signed by British singer Dua Lipa',
-                  ),
-                  SizedBox(height: 16.0),
-                  _BookCard(
-                    imageAsset: 'assets/discover_your_path.png',
-                    title: 'Discover Your Path To Success',
-                    author: 'An unique is one of the biggest superstars to have emerged from the',
-                  ),
-                  SizedBox(height: 16.0),
-                  _BookCard(
-                    imageAsset: 'assets/south_matteburgh.png',
-                    title: 'South Matteburgh',
-                    author: 'Sierra Techumara, popularly known as Copper Canyon, is situated in Mexico.',
-                  ),
-                  SizedBox(height: 16.0),
-                  _BookCard(
-                    imageAsset: 'assets/priceview.png',
-                    title: 'Priceview',
-                    author: 'Last the Road is the debut and only novela signed by British singer Dua Lipa',
-                  ),
-                ],
+              child: ListView.builder(
+                itemCount: 4, // Number of book cards
+                itemBuilder: (context, index) {
+                  final bookData = [
+                    {
+                      'imageAsset': '',
+                      'title': 'Copper Canyon',
+                      'author':
+                          'Last the Road is the debut and only novela signed by British singer Dua Lipa',
+                    },
+                    {
+                      'imageAsset': '',
+                      'title': 'Discover Your Path To Success',
+                      'author':
+                          'An unique is one of the biggest superstars to have emerged from the',
+                    },
+                    {
+                      'imageAsset': '',
+                      'title': 'South Matteburgh',
+                      'author':
+                          'Sierra Techumara, popularly known as Copper Canyon, is situated in Mexico.',
+                    },
+                    {
+                      'imageAsset': '',
+                      'title': 'Priceview',
+                      'author':
+                          'Last the Road is the debut and only novela signed by British singer Dua Lipa',
+                    },
+                  ][index];
+
+                  return Column(
+                    children: [
+                      _BookCard(
+                        imageAsset: bookData['imageAsset']!,
+                        title: bookData['title']!,
+                        author: bookData['author']!,
+                      ),
+                      SizedBox(height: 16.0),
+                    ],
+                  );
+                },
               ),
             ),
           ],
@@ -101,7 +119,7 @@ class _CategoryButton extends StatelessWidget {
     return TextButton(
       onPressed: () {},
       style: TextButton.styleFrom(
-        primary: isActive ? Colors.blue : Colors.grey,
+        foregroundColor: isActive ? Colors.blue : Colors.grey,
       ),
       child: Text(label),
     );
