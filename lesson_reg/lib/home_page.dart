@@ -3,77 +3,26 @@ import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _MyBooksPageState createState() => _MyBooksPageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  // Client-specific variables
-  int remainingClasses = 10;
-  DateTime expirationDate = DateTime.now().add(Duration(days: 30));
-
-  // Admin-specific variables
-  int newClientClasses = 0;
-
+class _MyBooksPageState extends State<MyBooksPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Time Book Hall'),
+        title: TextField(
+          decoration: InputDecoration(
+            hintText: 'Find read',
+            border: InputBorder.none,
+            prefixIcon: Icon(Icons.search),
+          ),
+        ),
         actions: [
-          if (MediaQuery.of(context).size.width > 600)
-            Row(
-              children: [
-                // Client Phrases
-                TextButton(
-                  onPressed: () {},
-                  child: Text('Create time book hall'),
-                ),
-                SizedBox(width: 16.0),
-                TextButton(
-                  onPressed: () {},
-                  child: Text('Cancellation 2 hours in advance'),
-                ),
-                SizedBox(width: 16.0),
-                TextButton(
-                  onPressed: () {},
-                  child: Text('Remaining classes: $remainingClasses'),
-                ),
-                SizedBox(width: 16.0),
-                TextButton(
-                  onPressed: () {},
-                  child: Text(
-                      'Expiration date: ${DateFormat('yyyy-MM-dd').format(expirationDate)}'),
-                ),
-                SizedBox(width: 16.0),
-
-                // Admin Phrases
-                TextButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => AddNewClientDialog(
-                        onRefill: (newClasses) {
-                          setState(() {
-                            remainingClasses += newClasses;
-                          });
-                        },
-                      ),
-                    );
-                  },
-                  child: Text('Add new client'),
-                ),
-                SizedBox(width: 16.0),
-                TextButton(
-                  onPressed: () {
-                    setState(() {
-                      remainingClasses += newClientClasses;
-                      newClientClasses = 0;
-                    });
-                  },
-                  child: Text('Refill the classes'),
-                ),
-              ],
-            ),
+          IconButton(
+            icon: Icon(Icons.more_vert),
+            onPressed: () {},
+          ),
         ],
       ),
       body: Padding(
@@ -81,46 +30,54 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (MediaQuery.of(context).size.width <= 600)
-              // Client Phrases
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Create time book hall'),
-                  SizedBox(height: 8.0),
-                  Text('Cancellation 2 hours in advance'),
-                  SizedBox(height: 8.0),
-                  Text('Remaining classes: $remainingClasses'),
-                  SizedBox(height: 8.0),
-                  Text(
-                      'Expiration date: ${DateFormat('yyyy-MM-dd').format(expirationDate)}'),
-                  Divider(),
-                ],
-              ),
-
-            // Admin Phrases
-            Text('Add new client'),
-            SizedBox(height: 8.0),
-            TextField(
-              keyboardType: TextInputType.number,
-              onChanged: (value) {
-                setState(() {
-                  newClientClasses = int.parse(value);
-                });
-              },
-              decoration: InputDecoration(
-                hintText: 'Enter new client classes',
+            SizedBox(height: 16.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _CategoryButton(label: 'POPULAR', isActive: true),
+                _CategoryButton(label: 'ROMANTIC'),
+                _CategoryButton(label: 'SCIENCE'),
+                _CategoryButton(label: 'STORY'),
+                _CategoryButton(label: 'MORE'),
+              ],
+            ),
+            SizedBox(height: 24.0),
+            Text(
+              'Top readings',
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 8.0),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  remainingClasses += newClientClasses;
-                  newClientClasses = 0;
-                });
-              },
-              child: Text('Refill the classes'),
+            SizedBox(height: 16.0),
+            Expanded(
+              child: ListView(
+                children: [
+                  _BookCard(
+                    imageAsset: 'assets/copper_canyon.png',
+                    title: 'Copper Canyon',
+                    author: 'Last the Road is the debut and only novela signed by British singer Dua Lipa',
+                  ),
+                  SizedBox(height: 16.0),
+                  _BookCard(
+                    imageAsset: 'assets/discover_your_path.png',
+                    title: 'Discover Your Path To Success',
+                    author: 'An unique is one of the biggest superstars to have emerged from the',
+                  ),
+                  SizedBox(height: 16.0),
+                  _BookCard(
+                    imageAsset: 'assets/south_matteburgh.png',
+                    title: 'South Matteburgh',
+                    author: 'Sierra Techumara, popularly known as Copper Canyon, is situated in Mexico.',
+                  ),
+                  SizedBox(height: 16.0),
+                  _BookCard(
+                    imageAsset: 'assets/priceview.png',
+                    title: 'Priceview',
+                    author: 'Last the Road is the debut and only novela signed by British singer Dua Lipa',
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -129,48 +86,80 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class AddNewClientDialog extends StatefulWidget {
-  final Function(int) onRefill;
+class _CategoryButton extends StatelessWidget {
+  final String label;
+  final bool isActive;
 
-  AddNewClientDialog({required this.onRefill});
-
-  @override
-  _AddNewClientDialogState createState() => _AddNewClientDialogState();
-}
-
-class _AddNewClientDialogState extends State<AddNewClientDialog> {
-  int newClientClasses = 0;
+  const _CategoryButton({
+    Key? key,
+    required this.label,
+    this.isActive = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text('Add New Client'),
-      content: TextField(
-        keyboardType: TextInputType.number,
-        onChanged: (value) {
-          setState(() {
-            newClientClasses = int.parse(value);
-          });
-        },
-        decoration: InputDecoration(
-          hintText: 'Enter new client classes',
+    return TextButton(
+      onPressed: () {},
+      style: TextButton.styleFrom(
+        primary: isActive ? Colors.blue : Colors.grey,
+      ),
+      child: Text(label),
+    );
+  }
+}
+
+class _BookCard extends StatelessWidget {
+  final String imageAsset;
+  final String title;
+  final String author;
+
+  const _BookCard({
+    Key? key,
+    required this.imageAsset,
+    required this.title,
+    required this.author,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Image.asset(
+              imageAsset,
+              width: 80.0,
+              height: 120.0,
+              fit: BoxFit.cover,
+            ),
+            SizedBox(width: 16.0),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 8.0),
+                  Text(
+                    author,
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
-      actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: Text('Cancel'),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            widget.onRefill(newClientClasses);
-            Navigator.of(context).pop();
-          },
-          child: Text('Refill'),
-        ),
-      ],
     );
   }
 }
