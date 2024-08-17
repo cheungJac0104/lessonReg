@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io' show Platform;
 import 'package:window_manager/window_manager.dart';
-import 'home_page.dart';
+import 'daily_fitness_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,9 +22,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Time Book Hall',
+      title: 'VE Fitness Tracker',
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: DailyFitnessPage(),
     );
   }
 }
