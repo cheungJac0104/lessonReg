@@ -3,25 +3,21 @@ import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
   @override
-  _MyBooksPageState createState() => _MyBooksPageState();
+  DailyPlanPage createState() => DailyPlanPage();
 }
 
-class _MyBooksPageState extends State<HomePage> {
+class DailyPlanPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: TextField(
-          decoration: InputDecoration(
-            hintText: 'Find read',
-            border: InputBorder.none,
-            prefixIcon: Icon(Icons.search),
-          ),
-        ),
+        title: Text('Welcome Back'),
         actions: [
           IconButton(
-            icon: Icon(Icons.more_vert),
-            onPressed: () {},
+            icon: Icon(Icons.notifications),
+            onPressed: () {
+              // Handle notification action
+            },
           ),
         ],
       ),
@@ -30,149 +26,218 @@ class _MyBooksPageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 16.0),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _CategoryButton(label: 'POPULAR', isActive: true),
-                  _CategoryButton(label: 'ROMANTIC'),
-                  _CategoryButton(label: 'SCIENCE'),
-                  _CategoryButton(label: 'STORY'),
-                  _CategoryButton(label: 'MORE'),
-                ],
-              ),
-            ),
-            SizedBox(height: 24.0),
             Text(
-              'Reservation Information',
+              'Zaire Carder',
               style: TextStyle(
-                fontSize: 18.0,
+                fontSize: 24.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
             SizedBox(height: 16.0),
-            Expanded(
-              child: ListView.builder(
-                itemCount: 4, // Number of book cards
-                itemBuilder: (context, index) {
-                  final bookData = [
-                    {
-                      'imageAsset': 'assets/images/mon.png',
-                      'title': 'Copper Canyon',
-                      'author': '',
-                    },
-                    {
-                      'imageAsset': 'assets/images/mon.png',
-                      'title': 'Discover Your Path To Success',
-                      'author': '',
-                    },
-                    {
-                      'imageAsset': 'assets/images/mon.png',
-                      'title': 'South Matteburgh',
-                      'author': '',
-                    },
-                    {
-                      'imageAsset': 'assets/images/mon.png',
-                      'title': 'Priceview',
-                      'author': '',
-                    },
-                  ][index];
-
-                  return Column(
-                    children: [
-                      _BookCard(
-                        imageAsset: bookData['imageAsset']!,
-                        title: bookData['title']!,
-                        author: bookData['author']!,
-                      ),
-                      SizedBox(height: 16.0),
-                    ],
-                  );
-                },
+            Container(
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(8.0),
               ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _CategoryButton extends StatelessWidget {
-  final String label;
-  final bool isActive;
-
-  const _CategoryButton({
-    Key? key,
-    required this.label,
-    this.isActive = false,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {},
-      style: TextButton.styleFrom(
-        foregroundColor: isActive ? Colors.blue : Colors.grey,
-      ),
-      child: Text(label),
-    );
-  }
-}
-
-class _BookCard extends StatelessWidget {
-  final String imageAsset;
-  final String title;
-  final String author;
-
-  const _BookCard({
-    Key? key,
-    required this.imageAsset,
-    required this.title,
-    required this.author,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.asset(
-              imageAsset,
-              width: 80.0,
-              height: 120.0,
-              fit: BoxFit.cover,
-            ),
-            SizedBox(width: 16.0),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    title,
+                    'Execellent, Today\'s your\nplan is almost done',
                     style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 8.0),
-                  Text(
-                    author,
-                    style: TextStyle(
-                      fontSize: 14.0,
-                      color: Colors.grey,
-                    ),
+                  CircularProgressIndicator(
+                    value: 0.8,
+                    strokeWidth: 6.0,
+                    backgroundColor: Colors.grey[300],
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
                   ),
                 ],
               ),
             ),
+            SizedBox(height: 24.0),
+            Text(
+              'Category',
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 8.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CategoryCard(
+                  icon: Icons.person,
+                  title: 'Personal Plan',
+                  plansRemaining: '3 Plans Remaining',
+                  onTap: () {
+                    // Navigate to Personal Plan
+                  },
+                ),
+                CategoryCard(
+                  icon: Icons.work,
+                  title: 'Work Plan',
+                  plansRemaining: '8 Plans Remaining',
+                  onTap: () {
+                    // Navigate to Work Plan
+                  },
+                ),
+              ],
+            ),
+            SizedBox(height: 24.0),
+            Text(
+              'On Going Plan',
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 8.0),
+            PlanCard(
+              icon: Icons.web,
+              title: 'Creating webflow design and responsive on mobile',
+              selectedOption: 'Create Lo-Fi',
+              options: ['Create Lo-Fi', 'Create Landing Page'],
+            ),
+            SizedBox(height: 8.0),
+            PlanCard(
+              icon: Icons.fitness_center,
+              title: 'Workout',
+              selectedOption: 'Jogging',
+              options: ['Jogging', 'Strength Training', 'Yoga'],
+            ),
+            Spacer(),
+            FloatingActionButton(
+              onPressed: () {
+                // Handle add new plan action
+              },
+              child: Icon(Icons.add),
+            ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class CategoryCard extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String plansRemaining;
+  final VoidCallback onTap;
+
+  CategoryCard({
+    required this.icon,
+    required this.title,
+    required this.plansRemaining,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          color: Colors.grey[200],
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(icon),
+            SizedBox(height: 8.0),
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 4.0),
+            Text(plansRemaining),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class PlanCard extends StatefulWidget {
+  final IconData icon;
+  final String title;
+  final String selectedOption;
+  final List<String> options;
+
+  PlanCard({
+    required this.icon,
+    required this.title,
+    required this.selectedOption,
+    required this.options,
+  });
+
+  @override
+  _PlanCardState createState() => _PlanCardState();
+}
+
+class _PlanCardState extends State<PlanCard> {
+  late String _selectedOption;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedOption = widget.selectedOption;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        color: Colors.grey[200],
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      child: Row(
+        children: [
+          Icon(widget.icon),
+          SizedBox(width: 16.0),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.title,
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 8.0),
+                DropdownButton<String>(
+                  value: _selectedOption,
+                  items: widget.options.map((option) {
+                    return DropdownMenuItem<String>(
+                      value: option,
+                      child: Text(option),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      _selectedOption = value!;
+                    });
+                  },
+                  underline: Container(),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
