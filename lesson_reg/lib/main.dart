@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io' show Platform;
 import 'package:window_manager/window_manager.dart';
-import 'daily_fitness_page.dart';
+import 'welcome_screen_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'VE Fitness Tracker',
       debugShowCheckedModeBanner: false,
-      home: DailyFitnessPage(),
+      home: WelcomeScreen(),
     );
   }
 }
